@@ -1,0 +1,25 @@
+// MARK:- Redundant superclass constraint
+protocol S where Self:UIView {
+    associatedtype Parent:P
+}
+
+protocol P where Self:UIView {
+    associatedtype View:S
+}
+
+extension UIButton:P {
+    typealias View = UILabel
+}
+
+extension UILabel:S {
+    typealias Parent = UIButton
+}
+
+
+// Warning as follows:
+//Redundant superclass constraint 'T.View' : 'UIView'
+//Redundant superclass constraint 'T.View.Parent' : 'UIView'
+//Redundant superclass constraint 'T.View.Parent' : 'UIView'
+class D<T:P> where T.View == UILabel{
+    
+}
